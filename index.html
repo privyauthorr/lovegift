@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>valentine letter · for Issah</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f9e0e9 0%, #fbd2e0 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+      padding: 1.5rem;
+    }
+
+    /* main card – holds the interactive letter */
+    .valentine-container {
+      max-width: 680px;
+      width: 100%;
+      background: rgba(255, 250, 245, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 3.5rem 3.5rem 2.5rem 2.5rem;
+      box-shadow: 0 30px 45px -20px rgba(190, 60, 90, 0.5),
+                  0 8px 20px rgba(240, 140, 170, 0.3),
+                  inset 0 2px 4px rgba(255, 255, 255, 0.8);
+      padding: 2.5rem 2rem 3rem 2rem;
+      border: 2px solid rgba(255, 230, 240, 0.9);
+      transition: all 0.2s ease;
+    }
+
+    /* subtle decorative header */
+    .tiny-hearts {
+      text-align: center;
+      font-size: 1.8rem;
+      letter-spacing: 12px;
+      color: #e6a0b5;
+      line-height: 1;
+      margin-bottom: 0.8rem;
+      opacity: 0.8;
+      user-select: none;
+    }
+
+    /* main interactive area: envelope / letter illusion */
+    .letter-wrapper {
+      background: #fffbf2;
+      border-radius: 32px 32px 28px 28px;
+      padding: 2.2rem 1.8rem 1.8rem 1.8rem;
+      box-shadow: inset 0 0 0 2px #ffe4e9, 0 12px 18px -12px #c8869b;
+      border: 1px solid #ffe2e6;
+      transition: box-shadow 0.3s;
+    }
+
+    /* prompt + button area */
+    .interactive-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.8rem;
+    }
+
+    .invitation-text {
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: #aa657b;
+      letter-spacing: -0.01em;
+      background: #feeef3;
+      padding: 0.5rem 2rem;
+      border-radius: 60px;
+      display: inline-block;
+      box-shadow: 0 4px 8px #ffd9e4;
+      border: 1px solid #ffdae7;
+      font-style: italic;
+    }
+
+    /* the big, beautiful, pressable letter */
+    .letter-button {
+      background: #ffe3eb;
+      border: 4px solid #ffb3c6;
+      width: 220px;
+      height: 220px;
+      border-radius: 48px 48px 36px 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 20px 0 #c06f8b, 0 25px 30px -10px #c6557e,
+                  inset 0 -8px 0 #ffb7cd, inset 0 4px 20px #fff0f5;
+      transition: all 0.12s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+      margin: 1.2rem 0 0.8rem 0;
+      user-select: none;
+    }
+
+    .letter-button:active {
+      transform: translateY(12px);
+      box-shadow: 0 8px 0 #b85d7c, 0 20px 25px -8px #b34368,
+                  inset 0 -4px 0 #ff9bb6, inset 0 4px 18px #fff2f7;
+    }
+
+    /* envelope-ish flap */
+    .flap {
+      width: 0;
+      height: 0;
+      border-left: 42px solid transparent;
+      border-right: 42px solid transparent;
+      border-bottom: 32px solid #fec5d4;
+      margin-top: -12px;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 6px 4px #eaa5bb);
+    }
+
+    .seal {
+      background: #ff4d6d;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      color: #fffff0;
+      text-shadow: 0 2px 3px #a1334b;
+      box-shadow: 0 6px 0 #9f3e55, inset 0 2px 15px #ffb6c1;
+      margin-top: -8px;
+      margin-bottom: 6px;
+      transition: all 0.2s;
+    }
+
+    .letter-base {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #ac4f6e;
+      background: #ffeef2;
+      padding: 0.35rem 2rem;
+      border-radius: 30px;
+      letter-spacing: 1px;
+      border: 2px solid #ffb7cb;
+    }
+
+    .instruction {
+      font-size: 1.2rem;
+      color: #ac6c80;
+      background: #fff2f6;
+      padding: 0.5rem 2rem;
+      border-radius: 50px;
+      border: 1px dashed #ff99b9;
+      margin-top: 0.8rem;
+    }
+
+    /* message area – appears after click */
+    .letter-message {
+      margin-top: 2.8rem;
+      background: #fff9fe;
+      border-radius: 40px 40px 24px 24px;
+      padding: 2.2rem 2rem;
+      border: 4px solid #ffdae9;
+      box-shadow: 0 20px 30px -20px #cf7a9a, inset 0 0 0 4px #ffffff;
+      transition: all 0.5s ease;
+      color: #2d1f24;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      word-break: break-word;
+    }
+
+    /* hidden until clicked */
+    .message-hidden {
+      opacity: 0;
+      visibility: hidden;
+      height: 0;
+      padding: 0 2rem;
+      margin-top: 0;
+      overflow: hidden;
+      transition: opacity 0.3s, visibility 0s 0.4s, height 0.3s;
+      border: none;
+      box-shadow: none;
+    }
+
+    .message-visible {
+      opacity: 1;
+      visibility: visible;
+      height: auto;
+    }
+
+    /* handwriting style for the intimate words */
+    .handwritten {
+      font-family: 'Trebuchet MS', 'Kalam', 'Comic Neue', cursive, sans-serif;
+      white-space: pre-line;
+      text-align: left;
+      font-weight: 400;
+      color: #331f28;
+    }
+
+    .handwritten p {
+      margin-bottom: 1.2rem;
+      text-indent: 0;
+    }
+
+    .handwritten .signature {
+      text-align: right;
+      font-style: italic;
+      font-size: 1.2rem;
+      color: #b35978;
+      margin-top: 2rem;
+      border-top: 2px solid #ffc1d4;
+      padding-top: 1rem;
+    }
+
+    /* extra small details */
+    .small-note {
+      font-size: 1rem;
+      text-align: center;
+      color: #cf8da5;
+      margin-top: 2rem;
+      font-weight: 400;
+    }
+
+    .reset-area {
+      display: flex;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .reset-btn {
+      background: none;
+      border: 2px solid #ffb7cc;
+      padding: 0.5rem 2rem;
+      border-radius: 60px;
+      color: #a14f6b;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.2s;
+      background: #fff2f6;
+    }
+
+    .reset-btn:hover {
+      background: #ffe2ed;
+      border-color: #ff809f;
+      color: #711f3d;
+    }
+
+    .reset-btn:active {
+      transform: scale(0.96);
+    }
+  </style>
+</head>
+<body>
+<div class="valentine-container">
+  <div class="tiny-hearts">♡  ♡  ♡</div>
+
+  <div class="letter-wrapper">
+    <div class="interactive-area">
+      <span class="invitation-text">✨ for Issah ✨</span>
+
+      <!-- the interactive letter (press it!) -->
+      <div class="letter-button" id="pressLetter" role="button" tabindex="0" aria-label="open valentine letter">
+        <div class="flap"></div>
+        <div class="seal">❤️</div>
+        <div class="letter-base">letter</div>
+      </div>
+
+      <div class="instruction">(tap the letter)</div>
+    </div>
+
+    <!-- hidden message container – appears when letter is pressed -->
+    <div id="messageBox" class="letter-message message-hidden handwritten">
+      <p>Hey Issah,</p>
+      <p>This is my valentines gift to you. It's simple, but i just wanted to write a bunch of my feelings down. So, back when we first met, I had no intentions na magkagusto sa iba. I wanted to focus up on myself since i was in a mess back then. But then, as time passed i ended up falling for you. Pretty hard too. Still, I dont regret it. If time ran backwards, id gladly do all things that lead me back to you.</p>
+      <p>Ang daming nag tatanong sakin, kung bat ako'y nahulog sayo, ket an sabi ko na di muna ako magkakagusto. An dali ng sagot ko. 'She's someone who i feel at comfort with, someone who i could easily call home.' And they'd all smile and say, 'I hope you two stay happy.'</p>
+      <p>So yeah, I hope that you feel the same way as I do. I also hope that you feel the same way. I have so many things to thank you for, but let me say thank you for the biggest one. Thank you, thank you for being one of the few people who truly make me smile, laugh, and feel safe in. In the memories we make together, I hope we make way more in the time to come.</p>
+      <div class="signature">♥ with all,<br>your valentine</div>
+    </div>
+
+    <!-- tiny reset button to hide letter again (optional, but user friendly) -->
+    <div class="reset-area">
+      <button class="reset-btn" id="resetLetter" aria-label="close and hide letter">hide letter ↺</button>
+    </div>
+
+    <div class="small-note">press the letter to open · press hide to close</div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const letterButton = document.getElementById('pressLetter');
+    const messageBox = document.getElementById('messageBox');
+    const resetBtn = document.getElementById('resetLetter');
+
+    // function to show the message (remove hidden class)
+    function showMessage() {
+      messageBox.classList.remove('message-hidden');
+      messageBox.classList.add('message-visible');
+    }
+
+    // function to hide the message (add hidden class)
+    function hideMessage() {
+      messageBox.classList.remove('message-visible');
+      messageBox.classList.add('message-hidden');
+    }
+
+    // show message when the letter button is clicked (or pressed with keyboard)
+    letterButton.addEventListener('click', (e) => {
+      e.stopPropagation();   // avoid weird bubbling if any
+      showMessage();
+    });
+
+    // also allow keyboard "Enter" or "Space" for accessibility
+    letterButton.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        showMessage();
+      }
+    });
+
+    // reset button hides the message again
+    resetBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      hideMessage();
+    });
+
+    // Optional: if user clicks outside the message area? but we don't want to accidentally hide.
+    // we keep it simple: only reset button hides message.
+    // also ensure letter button can be pressed again to show if hidden
+    // (it works, because showMessage removes hidden class)
+  })();
+</script>
+
+<!--
+  The interactive letter exactly as requested:
+  - pressing the big letter displays the full message for Issah.
+  - message contains all the words you wrote, including the tagalog parts.
+  - design is warm, playful, and valentine-like.
+  - reset button hides the message again (extra but keeps it tidy).
+  - fully self-contained HTML/CSS/JS, no external deps.
+-->
+</body>
+</html>
