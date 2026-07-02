@@ -1,345 +1,577 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>valentine letter · for Issah</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday My Love</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Updated color palette to match the floral pattern */
+            --primary-color: #8bb3d1; /* Soft Blue */
+            --secondary-color: #a4c3a7; /* Sage Green */
+            --text-dark: #4a5d4e;
+            --text-light: #7a8a7e;
+            --glass-bg: rgba(251, 249, 246, 0.85); /* Cream glass */
+            --glass-border: rgba(255, 255, 255, 0.9);
+            --shadow-light: 0 8px 32px 0 rgba(139, 179, 209, 0.2);
+        }
 
-    body {
-      background: linear-gradient(145deg, #f9e0e9 0%, #fbd2e0 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
-      padding: 1.5rem;
-    }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    /* main card – holds the interactive letter */
-    .valentine-container {
-      max-width: 680px;
-      width: 100%;
-      background: rgba(255, 250, 245, 0.75);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border-radius: 3.5rem 3.5rem 2.5rem 2.5rem;
-      box-shadow: 0 30px 45px -20px rgba(190, 60, 90, 0.5),
-                  0 8px 20px rgba(240, 140, 170, 0.3),
-                  inset 0 2px 4px rgba(255, 255, 255, 0.8);
-      padding: 2.5rem 2rem 3rem 2rem;
-      border: 2px solid rgba(255, 230, 240, 0.9);
-      transition: all 0.2s ease;
-    }
+        body, html {
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            height: 100%;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            
+            /* CODED SVG PATTERN (No external photos)
+               This generates the blue lily of the valley and green leaves perfectly.
+            */
+            background-color: #FBF9F6; /* Cream background */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 120 120'%3E%3Cg transform='translate(60, 80) scale(0.85)'%3E%3Cpath d='M0,35 C-35,10 -45,-30 -20,-45 C-15,-10 -5,20 0,35 Z' fill='%23A4C3A7'/%3E%3Cpath d='M0,35 C35,10 45,-30 20,-45 C15,-10 5,20 0,35 Z' fill='%23A4C3A7'/%3E%3Cpath d='M0,35 Q0,0 -20,-30' fill='none' stroke='%23A4C3A7' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M-18,-28 C-25,-25 -28,-18 -26,-12 C-23,-14 -20,-14 -18,-12 C-16,-14 -13,-14 -10,-12 C-8,-18 -11,-25 -18,-28 Z' fill='%239dbcd4'/%3E%3Cpath d='M-12,-12 C-19,-9 -22,-2 -20,4 C-17,2 -14,2 -12,4 C-10,2 -7,2 -4,4 C-2,-2 -5,-9 -12,-12 Z' fill='%239dbcd4'/%3E%3C/g%3E%3C/svg%3E");
+            background-size: 120px 120px;
+            background-position: center;
+        }
 
-    /* subtle decorative header */
-    .tiny-hearts {
-      text-align: center;
-      font-size: 1.8rem;
-      letter-spacing: 12px;
-      color: #e6a0b5;
-      line-height: 1;
-      margin-bottom: 0.8rem;
-      opacity: 0.8;
-      user-select: none;
-    }
+        /* Container & Screens */
+        .app-container {
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+        }
 
-    /* main interactive area: envelope / letter illusion */
-    .letter-wrapper {
-      background: #fffbf2;
-      border-radius: 32px 32px 28px 28px;
-      padding: 2.2rem 1.8rem 1.8rem 1.8rem;
-      box-shadow: inset 0 0 0 2px #ffe4e9, 0 12px 18px -12px #c8869b;
-      border: 1px solid #ffe2e6;
-      transition: box-shadow 0.3s;
-    }
+        .screen {
+            display: none;
+            width: 100%;
+            max-width: 420px;
+            padding: 30px 20px;
+            text-align: center;
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--shadow-light);
+        }
 
-    /* prompt + button area */
-    .interactive-area {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.8rem;
-    }
+        .screen.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .invitation-text {
-      font-size: 1.5rem;
-      font-weight: 400;
-      color: #aa657b;
-      letter-spacing: -0.01em;
-      background: #feeef3;
-      padding: 0.5rem 2rem;
-      border-radius: 60px;
-      display: inline-block;
-      box-shadow: 0 4px 8px #ffd9e4;
-      border: 1px solid #ffdae7;
-      font-style: italic;
-    }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    /* the big, beautiful, pressable letter */
-    .letter-button {
-      background: #ffe3eb;
-      border: 4px solid #ffb3c6;
-      width: 220px;
-      height: 220px;
-      border-radius: 48px 48px 36px 36px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 20px 0 #c06f8b, 0 25px 30px -10px #c6557e,
-                  inset 0 -8px 0 #ffb7cd, inset 0 4px 20px #fff0f5;
-      transition: all 0.12s cubic-bezier(0.2, 0.9, 0.3, 1.2);
-      margin: 1.2rem 0 0.8rem 0;
-      user-select: none;
-    }
+        h1, h2 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            font-size: 2.8rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.03);
+        }
 
-    .letter-button:active {
-      transform: translateY(12px);
-      box-shadow: 0 8px 0 #b85d7c, 0 20px 25px -8px #b34368,
-                  inset 0 -4px 0 #ff9bb6, inset 0 4px 18px #fff2f7;
-    }
+        /* Main Menu Icons */
+        .menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
 
-    /* envelope-ish flap */
-    .flap {
-      width: 0;
-      height: 0;
-      border-left: 42px solid transparent;
-      border-right: 42px solid transparent;
-      border-bottom: 32px solid #fec5d4;
-      margin-top: -12px;
-      margin-bottom: 10px;
-      filter: drop-shadow(0 6px 4px #eaa5bb);
-    }
+        .icon-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(139,179,209,0.3);
+            border-radius: 16px;
+            padding: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 20px;
+            position: relative;
+            overflow: hidden;
+        }
 
-    .seal {
-      background: #ff4d6d;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.4rem;
-      color: #fffff0;
-      text-shadow: 0 2px 3px #a1334b;
-      box-shadow: 0 6px 0 #9f3e55, inset 0 2px 15px #ffb6c1;
-      margin-top: -8px;
-      margin-bottom: 6px;
-      transition: all 0.2s;
-    }
+        .icon-btn .emoji-wrapper {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(139,179,209,0.3);
+        }
 
-    .letter-base {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #ac4f6e;
-      background: #ffeef2;
-      padding: 0.35rem 2rem;
-      border-radius: 30px;
-      letter-spacing: 1px;
-      border: 2px solid #ffb7cb;
-    }
+        .icon-btn span {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-dark);
+            font-family: 'Poppins', sans-serif;
+        }
 
-    .instruction {
-      font-size: 1.2rem;
-      color: #ac6c80;
-      background: #fff2f6;
-      padding: 0.5rem 2rem;
-      border-radius: 50px;
-      border: 1px dashed #ff99b9;
-      margin-top: 0.8rem;
-    }
+        .icon-btn:hover, .icon-btn:active {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(139,179,209,0.2);
+            border-color: var(--primary-color);
+        }
 
-    /* message area – appears after click */
-    .letter-message {
-      margin-top: 2.8rem;
-      background: #fff9fe;
-      border-radius: 40px 40px 24px 24px;
-      padding: 2.2rem 2rem;
-      border: 4px solid #ffdae9;
-      box-shadow: 0 20px 30px -20px #cf7a9a, inset 0 0 0 4px #ffffff;
-      transition: all 0.5s ease;
-      color: #2d1f24;
-      font-size: 1.15rem;
-      line-height: 1.7;
-      word-break: break-word;
-    }
+        /* Back Button */
+        .back-btn {
+            margin-top: 25px;
+            padding: 12px 30px;
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid #c8d8c9;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', sans-serif;
+        }
+        .back-btn:hover {
+            background: rgba(164, 195, 167, 0.1);
+            color: var(--text-dark);
+        }
 
-    /* hidden until clicked */
-    .message-hidden {
-      opacity: 0;
-      visibility: hidden;
-      height: 0;
-      padding: 0 2rem;
-      margin-top: 0;
-      overflow: hidden;
-      transition: opacity 0.3s, visibility 0s 0.4s, height 0.3s;
-      border: none;
-      box-shadow: none;
-    }
+        /* --- SCREEN 1: Envelope & Letter --- */
+        .envelope-container {
+            margin: 40px 0;
+            perspective: 1000px;
+        }
 
-    .message-visible {
-      opacity: 1;
-      visibility: visible;
-      height: auto;
-    }
+        .envelope {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            background: #9dbcd4; /* Blue envelope */
+            margin: 0 auto;
+            border-radius: 0 0 8px 8px;
+            cursor: pointer;
+            box-shadow: 0 15px 35px rgba(139, 179, 209, 0.25);
+        }
 
-    /* handwriting style for the intimate words */
-    .handwritten {
-      font-family: 'Trebuchet MS', 'Kalam', 'Comic Neue', cursive, sans-serif;
-      white-space: pre-line;
-      text-align: left;
-      font-weight: 400;
-      color: #331f28;
-    }
+        .flap {
+            position: absolute;
+            top: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-top: 100px solid #8bb3d1; /* Darker blue flap */
+            transform-origin: top;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 3;
+        }
+        /* Wax seal */
+        .flap::after {
+            content: '❤';
+            position: absolute;
+            top: -95px;
+            left: -15px;
+            width: 30px;
+            height: 30px;
+            background: #d4a3a8; /* Soft dusty pink wax */
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+            transition: opacity 0.3s ease;
+        }
 
-    .handwritten p {
-      margin-bottom: 1.2rem;
-      text-indent: 0;
-    }
+        .envelope-front {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 0; height: 0;
+            border-left: 140px solid transparent;
+            border-right: 140px solid transparent;
+            border-bottom: 90px solid #abc7db;
+            z-index: 2;
+        }
 
-    .handwritten .signature {
-      text-align: right;
-      font-style: italic;
-      font-size: 1.2rem;
-      color: #b35978;
-      margin-top: 2rem;
-      border-top: 2px solid #ffc1d4;
-      padding-top: 1rem;
-    }
+        .letter-paper {
+            position: absolute;
+            bottom: 10px;
+            left: 5%;
+            width: 90%;
+            height: 160px;
+            background: #FBF9F6; /* Cream paper */
+            padding: 30px 20px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1), height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1;
+            overflow: hidden;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            color: var(--text-dark);
+        }
 
-    /* extra small details */
-    .small-note {
-      font-size: 1rem;
-      text-align: center;
-      color: #cf8da5;
-      margin-top: 2rem;
-      font-weight: 400;
-    }
+        .envelope.open .flap {
+            transform: rotateX(180deg);
+            z-index: 0;
+        }
+        .envelope.open .flap::after {
+            opacity: 0;
+        }
 
-    .reset-area {
-      display: flex;
-      justify-content: center;
-      margin-top: 1rem;
-    }
+        .envelope.open .letter-paper {
+            transform: translateY(-100px);
+            height: 380px;
+            z-index: 4;
+            overflow-y: auto;
+        }
 
-    .reset-btn {
-      background: none;
-      border: 2px solid #ffb7cc;
-      padding: 0.5rem 2rem;
-      border-radius: 60px;
-      color: #a14f6b;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.2s;
-      background: #fff2f6;
-    }
+        .letter-paper::-webkit-scrollbar { width: 4px; }
+        .letter-paper::-webkit-scrollbar-thumb { background: var(--primary-color); border-radius: 4px; }
 
-    .reset-btn:hover {
-      background: #ffe2ed;
-      border-color: #ff809f;
-      color: #711f3d;
-    }
+        .instruction {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            animation: pulse 2s infinite;
+        }
 
-    .reset-btn:active {
-      transform: scale(0.96);
-    }
-  </style>
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
+        }
+
+        /* --- SCREEN 2: Cake & Photos --- */
+        .cake-container {
+            position: relative;
+            width: 100%;
+            height: 120px;
+            margin-bottom: 40px;
+            cursor: pointer;
+            border-radius: 16px;
+            box-shadow: inset 0 0 0 2px rgba(139, 179, 209, 0.3);
+            background: rgba(255,255,255,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .cake-instruction {
+            position: absolute;
+            font-size: 0.9rem;
+            color: #fff;
+            font-weight: 500;
+            z-index: 1;
+            pointer-events: none;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+        }
+
+        .cake-half {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 2;
+        }
+
+        .cake-left { left: 0; border-right: 2px dashed rgba(255,255,255,0.5); border-radius: 16px 0 0 16px; }
+        .cake-right { right: 0; border-radius: 0 16px 16px 0; }
+
+        .cake-container.split .cake-left { transform: translateX(-110%); }
+        .cake-container.split .cake-right { transform: translateX(110%); }
+
+        .photo-gallery {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+            padding: 10px;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        .cake-container.split + .photo-gallery {
+            display: flex;
+        }
+
+        .photo-gallery img {
+            width: 100%;
+            background: white;
+            padding: 12px 12px 45px 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .photo-gallery img:nth-child(odd) { transform: rotate(-3deg); }
+        .photo-gallery img:nth-child(even) { transform: rotate(3deg); }
+        .photo-gallery img:hover { transform: scale(1.05) rotate(0deg); z-index: 10; position: relative;}
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- SCREEN 3: Photobooth --- */
+        .photobooth-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            background: white;
+            padding: 15px 15px 70px 15px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        video, canvas {
+            width: 100%;
+            border-radius: 4px;
+            background: #111;
+            object-fit: cover;
+        }
+        
+        canvas { display: none; }
+
+        .camera-controls {
+            position: absolute;
+            bottom: -25px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .capture-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: 4px solid white;
+            border-radius: 50%;
+            width: 65px;
+            height: 65px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(139, 179, 209, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s;
+        }
+        
+        .capture-btn:active { transform: scale(0.9); }
+
+        .retake-btn {
+            background: #fff;
+            color: var(--text-dark);
+            border: 2px solid var(--secondary-color);
+            border-radius: 30px;
+            padding: 0 20px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+    </style>
 </head>
 <body>
-<div class="valentine-container">
-  <div class="tiny-hearts">♡  ♡  ♡</div>
 
-  <div class="letter-wrapper">
-    <div class="interactive-area">
-      <span class="invitation-text">✨ for Issah ✨</span>
-
-      <!-- the interactive letter (press it!) -->
-      <div class="letter-button" id="pressLetter" role="button" tabindex="0" aria-label="open valentine letter">
-        <div class="flap"></div>
-        <div class="seal">❤️</div>
-        <div class="letter-base">letter</div>
-      </div>
-
-      <div class="instruction">(tap the letter)</div>
+<div class="app-container">
+    
+    <div id="mainMenu" class="screen active">
+        <h1>Happy Birthday!</h1>
+        <div class="menu-grid">
+            <button class="icon-btn" onclick="showScreen('screenLetter')">
+                <div class="emoji-wrapper">💌</div>
+                <span>A Letter For You</span>
+            </button>
+            <button class="icon-btn" onclick="showScreen('screenCake')">
+                <div class="emoji-wrapper">🌿</div>
+                <span>Sweet Memories</span>
+            </button>
+            <button class="icon-btn" onclick="showScreen('screenCamera')">
+                <div class="emoji-wrapper">📸</div>
+                <span>Let's Take a Pic</span>
+            </button>
+        </div>
     </div>
 
-    <!-- hidden message container – appears when letter is pressed -->
-    <div id="messageBox" class="letter-message message-hidden handwritten">
-      <p>Hey Issah,</p>
-      <p>This is my valentines gift to you. It's simple, but i just wanted to write a bunch of my feelings down. So, back when we first met, I had no intentions na magkagusto sa iba. I wanted to focus up on myself since i was in a mess back then. But then, as time passed i ended up falling for you. Pretty hard too. Still, I dont regret it. If time ran backwards, id gladly do all things that lead me back to you.</p>
-      <p>Ang daming nag tatanong sakin, kung bat ako'y nahulog sayo, ket an sabi ko na di muna ako magkakagusto. An dali ng sagot ko. 'She's someone who i feel at comfort with, someone who i could easily call home.' And they'd all smile and say, 'I hope you two stay happy.'</p>
-      <p>So yeah, I hope that you feel the same way as I do. I also hope that you feel the same way. I have so many things to thank you for, but let me say thank you for the biggest one. Thank you, thank you for being one of the few people who truly make me smile, laugh, and feel safe in. In the memories we make together, I hope we make way more in the time to come.</p>
-      <div class="signature">♥ with all,<br>your valentine</div>
+    <div id="screenLetter" class="screen">
+        <h2>For You...</h2>
+        <div class="envelope-container">
+            <div class="envelope" id="envelope" onclick="openLetter()">
+                <div class="flap"></div>
+                <div class="letter-paper">
+                    <p>Happy birthday my love, I'm sad that I can't be there on your special day, but this is the best I can do right now hehe.</p>
+                    <br>
+                    <p>There are so many things I want to say, but I'll summarize it here. I love you. I love you so much you can't even imagine. I want to be by your side, through all the ups and downs, through the toughest of times.</p>
+                    <br>
+                    <p>I will be the person who loves you for you, for all your flaws, for all your perfections.</p>
+                    <br>
+                    <p>Again, I love you. I truly, truly love you.</p>
+                </div>
+                <div class="envelope-front"></div>
+            </div>
+        </div>
+        <p class="instruction" id="letterInstruction">Tap the envelope to open</p>
+        <button class="back-btn" onclick="goBack()">Go Back</button>
     </div>
 
-    <!-- tiny reset button to hide letter again (optional, but user friendly) -->
-    <div class="reset-area">
-      <button class="reset-btn" id="resetLetter" aria-label="close and hide letter">hide letter ↺</button>
+    <div id="screenCake" class="screen">
+        <h2>Unwrap Memories</h2>
+        
+        <div class="cake-container" id="cakeContainer" onclick="sliceCake()">
+            <span class="cake-instruction">Tap to Open</span>
+            <div class="cake-half cake-left">🎁</div>
+            <div class="cake-half cake-right">🎁</div>
+        </div>
+        
+        <div class="photo-gallery">
+            <img src="https://www.image2url.com/r2/default/images/1783005374509-f7edd8e8-d02d-4855-b8aa-cad85023476e.jpg" alt="Our Memory 1">
+            <img src="https://www.image2url.com/r2/default/images/1783005518508-caecd976-1545-4105-aab6-2c0667134389.jpg" alt="Our Memory 2">
+            <img src="https://www.image2url.com/r2/default/images/1783005641492-320b197f-5da3-42e0-8892-e335a4f9b16a.jpg" alt="Our Memory 3">
+        </div>
+        
+        <button class="back-btn" onclick="goBack()">Go Back</button>
     </div>
 
-    <div class="small-note">press the letter to open · press hide to close</div>
-  </div>
+    <div id="screenCamera" class="screen">
+        <h2>Smile!</h2>
+        
+        <div class="photobooth-container">
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas"></canvas>
+            
+            <div class="camera-controls">
+                <button class="capture-btn" id="snapBtn" onclick="takePhoto()">📷</button>
+                <button class="retake-btn" id="retakeBtn" onclick="retakePhoto()">Retake</button>
+            </div>
+        </div>
+
+        <button class="back-btn" style="margin-top: 45px;" onclick="goBack()">Go Back</button>
+    </div>
+
 </div>
 
 <script>
-  (function() {
-    const letterButton = document.getElementById('pressLetter');
-    const messageBox = document.getElementById('messageBox');
-    const resetBtn = document.getElementById('resetLetter');
+    let currentStream = null;
 
-    // function to show the message (remove hidden class)
-    function showMessage() {
-      messageBox.classList.remove('message-hidden');
-      messageBox.classList.add('message-visible');
+    function showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+
+        if (screenId === 'screenCamera') {
+            startCamera();
+        }
     }
 
-    // function to hide the message (add hidden class)
-    function hideMessage() {
-      messageBox.classList.remove('message-visible');
-      messageBox.classList.add('message-hidden');
+    function goBack() {
+        document.getElementById('envelope').classList.remove('open');
+        document.getElementById('letterInstruction').style.opacity = '1';
+        document.getElementById('cakeContainer').classList.remove('split');
+        
+        stopCamera();
+
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById('mainMenu').classList.add('active');
     }
 
-    // show message when the letter button is clicked (or pressed with keyboard)
-    letterButton.addEventListener('click', (e) => {
-      e.stopPropagation();   // avoid weird bubbling if any
-      showMessage();
-    });
+    function openLetter() {
+        document.getElementById('envelope').classList.add('open');
+        document.getElementById('letterInstruction').style.opacity = '0';
+    }
 
-    // also allow keyboard "Enter" or "Space" for accessibility
-    letterButton.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        showMessage();
-      }
-    });
+    function sliceCake() {
+        document.getElementById('cakeContainer').classList.add('split');
+    }
 
-    // reset button hides the message again
-    resetBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      hideMessage();
-    });
+    async function startCamera() {
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const snapBtn = document.getElementById('snapBtn');
+        const retakeBtn = document.getElementById('retakeBtn');
 
-    // Optional: if user clicks outside the message area? but we don't want to accidentally hide.
-    // we keep it simple: only reset button hides message.
-    // also ensure letter button can be pressed again to show if hidden
-    // (it works, because showMessage removes hidden class)
-  })();
+        video.style.display = 'block';
+        canvas.style.display = 'none';
+        snapBtn.style.display = 'flex';
+        retakeBtn.style.display = 'none';
+
+        try {
+            currentStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
+            video.srcObject = currentStream;
+        } catch (err) {
+            console.error("Error accessing camera: ", err);
+            alert("Could not access the camera. Please ensure you've granted permissions.");
+        }
+    }
+
+    function stopCamera() {
+        if (currentStream) {
+            currentStream.getTracks().forEach(track => track.stop());
+            currentStream = null;
+        }
+    }
+
+    function takePhoto() {
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const snapBtn = document.getElementById('snapBtn');
+        const retakeBtn = document.getElementById('retakeBtn');
+
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+        video.style.display = 'none';
+        canvas.style.display = 'block';
+        snapBtn.style.display = 'none';
+        retakeBtn.style.display = 'flex';
+    }
+
+    function retakePhoto() {
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const snapBtn = document.getElementById('snapBtn');
+        const retakeBtn = document.getElementById('retakeBtn');
+
+        video.style.display = 'block';
+        canvas.style.display = 'none';
+        snapBtn.style.display = 'flex';
+        retakeBtn.style.display = 'none';
+    }
 </script>
 
-<!--
-  The interactive letter exactly as requested:
-  - pressing the big letter displays the full message for Issah.
-  - message contains all the words you wrote, including the tagalog parts.
-  - design is warm, playful, and valentine-like.
-  - reset button hides the message again (extra but keeps it tidy).
-  - fully self-contained HTML/CSS/JS, no external deps.
--->
 </body>
 </html>
